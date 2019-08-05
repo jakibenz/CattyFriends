@@ -1,4 +1,11 @@
+@font-face{
+    font-family:star jedi;
+    font-style:normal;
+    font-weight:400;
+    src:local('Star Jedi'), url("Starjedi.ttf") format('truetype')}
 h1 {
-    font-family: 'Alfa Slab One', cursive;
+    font-family: 'Star Jedi', arial;
+    font-size: 48px;
+    text-shadow: 4px 4px 4px #978d8d;
     color: #041C34;
 }

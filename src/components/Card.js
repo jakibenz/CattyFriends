@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React  from 'react';
 
-class Card extends Component {
-    render() {
+const Card = ({id, name, gender, birth_year}) => {
         return (
-            <div className="tc bg-light-blue dib br4 ma2 pa3 grow bw2 shadow-5">
-                <img src={`https://robohash.org/set_set4/test${this.props.id}?size=200x200`} alt="robots"/>
+            <div className="tc bg-light-blue dib br4 ma2 pa3 grow dim shadow-5">
+                <img src={`https://robohash.org/set_set3/starwarsfriends${id}?size=130x130`} alt="robots"/>
                 <div>
-                    <h2>{this.props.name}</h2>
-                    <p>{this.props.email}</p>
+                    <h2>{name}</h2>
+                    <p>{gender}</p>
+                    <p>{birth_year}</p>
                 </div>
             </div>
         )
     }
-}
 export default Card
