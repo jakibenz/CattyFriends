@@ -48,6 +48,11 @@ export const getNextPage = (url) => (dispatch) => {
             const result  = await fetch (url)
             const nextUrl  = await result.json();
 
+            if (nextUrl.next === null)
+            {
+                return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: 'End of page' })
+            }
+
             return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.next})
 
         } catch (err) {

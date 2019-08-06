@@ -21,7 +21,7 @@ class ErrorBoundry extends Component {
         }else if (this.props.errorLog.length !== 0) {
             console.log(JSON.stringify(this.props.errorLog))
             return <h1 className="tc f1">
-                Error </h1>
+                Error {JSON.stringify(this.props.errorLog)} </h1>
         }else{
             return this.props.children
         }
