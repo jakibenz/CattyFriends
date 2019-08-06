@@ -8,10 +8,10 @@ import './index.css';
 import App from './containers/App';
 import 'tachyons';
 import * as serviceWorker from './serviceWorker';
-import { searchRobots, requestRobots, reducer_getNextPage } from './reducers.js';
+import { reducer_searchRobots, reducer_requestRobots, reducer_getNextPage } from './reducers.js';
 
 const logger  = createLogger()
-const rootReducer = combineReducers ({searchRobots, requestRobots, reducer_getNextPage})
+const rootReducer = combineReducers ({reducer_searchRobots, reducer_requestRobots, reducer_getNextPage})
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, logger))
 
 ReactDOM.render(

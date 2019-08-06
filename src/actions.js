@@ -3,6 +3,7 @@ import {
     REQUEST_ROBOTS_PENDING,
     REQUEST_ROBOTS_SUCCESSS,
     REQUEST_ROBOTS_FAILED,
+    REQUEST_ROBOTS_NEXTPAGE,
 } from './constants.js'
 
 export const setSearchField = (text) => {
@@ -11,7 +12,7 @@ export const setSearchField = (text) => {
         payload: text,
     })
 }
-export const requestRobots = () => (dispatch) => {
+export const requestRobots = (url) => (dispatch) => {
     dispatch({ type: REQUEST_ROBOTS_PENDING });
 
     async function getUsers(url) {
@@ -30,7 +31,7 @@ export const requestRobots = () => (dispatch) => {
             return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: err })
         }
     }
-    getUsers("https://swapi.co/api/people/?page=1");
+    getUsers(url);
 
     // fetch("https://jsonplaceholder.typicode.com/user")
     //     .then(resp => resp.json())
@@ -39,26 +40,20 @@ export const requestRobots = () => (dispatch) => {
 
 }
 
-export const getNextPage = () => (dispatch) => {
+export const getNextPage = (url) => (dispatch) => {
     dispatch({ type: REQUEST_ROBOTS_PENDING });
-
-    let currentUrl = "https://swapi.co/api/people";
 
     async function getNext(url) {
         try {
-            const people = await fetch(url);
-            let nextUrl = await people.json();
-            let currentUrl = nextUrl.next
+            const result  = await fetch (url)
+            const nextUrl  = await result.json();
 
-            const nextPeople  = await fetch (currentUrl)
-            let result  = await nextPeople.json();
-
-            return dispatch({ type: REQUEST_ROBOTS_SUCCESSS, payload: result.results})
+            return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.next})
 
         } catch (err) {
             return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: err })
         }
     }
-    getNext(currentUrl);
+    getNext(url);
 
 }

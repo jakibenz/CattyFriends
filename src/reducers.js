@@ -3,13 +3,14 @@ import {
     REQUEST_ROBOTS_PENDING,
     REQUEST_ROBOTS_SUCCESSS,
     REQUEST_ROBOTS_FAILED,
+    REQUEST_ROBOTS_NEXTPAGE,
 } from './constants.js'
 
 const initialStateSearch = {
     searchfield: '',
 }
 
-export const searchRobots = (state = initialStateSearch, action = {}) => {
+export const reducer_searchRobots = (state = initialStateSearch, action = {}) => {
     switch (action.type) {
         case CHANGE_SEARCH_FIELD:
             return { ...state, searchfield: action.payload };
@@ -24,7 +25,7 @@ const initialStateRobots = {
     errorMsg : ''
 }
 
-export const requestRobots = (state = initialStateRobots, action = {}) => {
+export const reducer_requestRobots = (state = initialStateRobots, action = {}) => {
     switch (action.type){
         case REQUEST_ROBOTS_PENDING:
             return {...state, isPending: true};
@@ -37,12 +38,16 @@ export const requestRobots = (state = initialStateRobots, action = {}) => {
     }
 }
 
-export const reducer_getNextPage = (state = initialStateRobots, action = {}) => {
+const initialStateUrl = {
+    currentUrl: 'https://swapi.co/api/people'
+}
+
+export const reducer_getNextPage = (state = initialStateUrl, action = {}) => {
     switch (action.type){
         case REQUEST_ROBOTS_PENDING:
             return {...state, isPending: true};
-        case REQUEST_ROBOTS_SUCCESSS:
-            return {...state,  isPending: false, robots: action.payload};
+        case REQUEST_ROBOTS_NEXTPAGE:
+            return {...state,  isPending: false, currentUrl: action.payload};
         case REQUEST_ROBOTS_FAILED:
             return {...state,  isPending: false, errorMsg: action.payload};
         default:
