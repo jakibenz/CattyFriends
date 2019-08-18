@@ -49,7 +49,7 @@ export const reducer_getNextPage = (state = initialStateUrl, action = {}) => {
         case REQUEST_ROBOTS_NEXTPAGE:
             return {...state,  isPending: false, currentUrl: action.payload};
         case REQUEST_ROBOTS_FAILED:
-            return {...state,  isPending: false, errorMsg: action.payload};
+            return {...state,  isPending: false, errorMsg: action.payload, currentUrl: 'https://swapi.co/api/people'};
         default:
             return state;
     }

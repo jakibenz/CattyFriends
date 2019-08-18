@@ -40,7 +40,7 @@ export const requestRobots = (url) => (dispatch) => {
 
 }
 
-export const getNextPage = (url) => (dispatch) => {
+export const getNextPage = (url, isNextButton) => (dispatch) => {
     dispatch({ type: REQUEST_ROBOTS_PENDING });
 
     async function getNext(url) {
@@ -48,13 +48,13 @@ export const getNextPage = (url) => (dispatch) => {
             const result  = await fetch (url)
             const nextUrl  = await result.json();
 
-            if (nextUrl.next === null)
-            {
+            if (nextUrl.next !== null && isNextButton){
+                return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.next})
+            }else if (nextUrl.previous !== null && !isNextButton){
+                return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.previous})
+            }else{
                 return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: 'End of page' })
             }
-
-            return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.next})
-
         } catch (err) {
             return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: err })
         }

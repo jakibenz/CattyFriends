@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
         onRequestRobots: (url) => {
             dispatch(requestRobots(url));
         },
-        onClickNext: (url) => {
-            dispatch(getNextPage(url))
+        onClickButton: (url, isNextButton) => {
+            dispatch(getNextPage(url, isNextButton))
         }
     }
 }
@@ -75,7 +75,7 @@ class App extends Component {
                         <CardList robots={filteredRobots} />
                     </Scroll>
                 </ErrorBoundry>
-                <NextPage fetchNext={()=>this.props.onClickNext(this.props.url)} />
+                <NextPage fetchNext={(isNextButton) => this.props.onClickButton(this.props.url, isNextButton)} />
             </div>
         )
     }
