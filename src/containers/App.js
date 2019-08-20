@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
         robots: state.reducer_requestRobots.robots,
         errorMsg: state.reducer_requestRobots.errorMsg,
         isPending: state.reducer_requestRobots.isPending,
+        disableButton: state.reducer_requestRobots.disableButton,
         url: state.reducer_getNextPage.currentUrl
     }
 }
@@ -50,7 +51,7 @@ class App extends Component {
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
         if (this.props.url !== prevProps.url) {
-            this.props.onRequestRobots(this.props.url);
+            this.props.onRequestRobots(this.props.url)
         }
       }
 
@@ -64,8 +65,6 @@ class App extends Component {
         const filteredRobots = robots.filter(robot => {   
             return robot.name.toLowerCase().includes(searchfield.toLowerCase())
         })
-
-        console.log(this.props)
         return (
             <div className="tc">
                 <h1 className="f1">STAR WARS</h1>
@@ -75,7 +74,7 @@ class App extends Component {
                         <CardList robots={filteredRobots} />
                     </Scroll>
                 </ErrorBoundry>
-                <NextPage fetchNext={(isNextButton) => this.props.onClickButton(this.props.url, isNextButton)} />
+                <NextPage fetchNext={(isNextButton) => this.props.onClickButton(this.props.url, isNextButton)} isLastPage={this.props.disableButton}/>
             </div>
         )
     }

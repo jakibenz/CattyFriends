@@ -4,6 +4,7 @@ import {
     REQUEST_ROBOTS_SUCCESSS,
     REQUEST_ROBOTS_FAILED,
     REQUEST_ROBOTS_NEXTPAGE,
+    CHECK_ROBOTS_LASTPAGE
 } from './constants.js'
 
 export const setSearchField = (text) => {
@@ -23,10 +24,17 @@ export const requestRobots = (url) => (dispatch) => {
             if (users.status === 404)
             {
                 return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: user })
+
+            }else{
+                if (user.next === null){
+                    dispatch({ type: CHECK_ROBOTS_LASTPAGE, payload: true})      
+                }
+                else{
+                    dispatch({ type: CHECK_ROBOTS_LASTPAGE, payload: false})
+                }
+                return dispatch({ type: REQUEST_ROBOTS_SUCCESSS, payload: user.results })
             }
 
-            return dispatch({ type: REQUEST_ROBOTS_SUCCESSS, payload: user.results })
-             
         } catch (err) {
             return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: err })
         }
@@ -41,7 +49,6 @@ export const requestRobots = (url) => (dispatch) => {
 }
 
 export const getNextPage = (url, isNextButton) => (dispatch) => {
-    dispatch({ type: REQUEST_ROBOTS_PENDING });
 
     async function getNext(url) {
         try {
@@ -50,10 +57,12 @@ export const getNextPage = (url, isNextButton) => (dispatch) => {
 
             if (nextUrl.next !== null && isNextButton){
                 return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.next})
+
             }else if (nextUrl.previous !== null && !isNextButton){
                 return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: nextUrl.previous})
+                
             }else{
-                return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: 'End of page' })
+                return dispatch({ type: REQUEST_ROBOTS_NEXTPAGE, payload: url })
             }
         } catch (err) {
             return dispatch({ type: REQUEST_ROBOTS_FAILED, payload: err })

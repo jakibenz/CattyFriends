@@ -4,6 +4,7 @@ import {
     REQUEST_ROBOTS_SUCCESSS,
     REQUEST_ROBOTS_FAILED,
     REQUEST_ROBOTS_NEXTPAGE,
+    CHECK_ROBOTS_LASTPAGE,
 } from './constants.js'
 
 const initialStateSearch = {
@@ -22,7 +23,8 @@ export const reducer_searchRobots = (state = initialStateSearch, action = {}) =>
 const initialStateRobots = {
     robots: [],
     isPending : false,
-    errorMsg : ''
+    errorMsg : '',
+    disableButton: false,
 }
 
 export const reducer_requestRobots = (state = initialStateRobots, action = {}) => {
@@ -30,14 +32,15 @@ export const reducer_requestRobots = (state = initialStateRobots, action = {}) =
         case REQUEST_ROBOTS_PENDING:
             return {...state, isPending: true};
         case REQUEST_ROBOTS_SUCCESSS:
-            return {...state,  isPending: false, robots: action.payload};
+            return {...state,  isPending: false, errorMsg: "", robots: action.payload};     
+        case CHECK_ROBOTS_LASTPAGE:
+                return {...state,  isPending: false, disableButton: action.payload};
         case REQUEST_ROBOTS_FAILED:
             return {...state,  isPending: false, errorMsg: action.payload};
         default:
             return state;
     }
 }
-
 const initialStateUrl = {
     currentUrl: 'https://swapi.co/api/people'
 }
@@ -49,7 +52,7 @@ export const reducer_getNextPage = (state = initialStateUrl, action = {}) => {
         case REQUEST_ROBOTS_NEXTPAGE:
             return {...state,  isPending: false, currentUrl: action.payload};
         case REQUEST_ROBOTS_FAILED:
-            return {...state,  isPending: false, errorMsg: action.payload, currentUrl: 'https://swapi.co/api/people'};
+            return {...state,  isPending: false, errorMsg: action.payload}
         default:
             return state;
     }
