@@ -6,9 +6,9 @@ This project is a simple React app with redux and redux-thunk to get all charact
  - [SWAPI](https://swapi.co/)
  - [RoboHash](https://robohash.org/)
  ## Screenshot
-![Screenshot](./docs/screenshot-2.PNG)
+![Screenshot](./docs/screenshot.PNG)
 
-![Comic books](./docs/screenshot-detail.PNG)
+![Screenshot2](./docs/screenshot-2.PNG)
 
 ## What it does?
 This App provides the follow functionalities:
